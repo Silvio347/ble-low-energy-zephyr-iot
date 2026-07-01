@@ -1,0 +1,13 @@
+{
+  "idf.currentSetup": "/home/silvio/esp/esp-idf-v5.5.3",
+  "idf.openOcdConfigs": [
+    "board/esp32-wrover-kit-3.3v.cfg"
+  ],
+  "idf.customExtraVars": {
+    "IDF_PATH": "/home/silvio/esp/esp-idf-v5.5.3",
+    "IDF_TOOLS_PATH": "/home/silvio/.espressif",
+    "IDF_PYTHON_ENV_PATH": "/home/silvio/.espressif/python_env/idf5.5_py3.12_env",
+    "IDF_TARGET": "esp32"
+  },
+  "idf.port": "/dev/ttyACM0"
+}

@@ -1,0 +1,12 @@
+{
+  "mqtt_host": "example.s1.eu.hivemq.cloud",
+  "mqtt_port": 8883,
+  "mqtt_username": "username",
+  "mqtt_password": "password",
+  "mqtt_client_id": "local-dashboard",
+  "mqtt_base_topic": "lowble",
+  "mqtt_tls": true,
+  "http_host": "127.0.0.1",
+  "http_port": 8080
+}
+

@@ -1,0 +1,26 @@
+idf_component_register(
+    SRCS
+        "app_main.c"
+        "app_config.c"
+        "ble_scanner.c"
+        "payload_parser.c"
+        "mqtt_client_app.c"
+        "wifi_manager.c"
+        "config_portal.c"
+        "ota_update.c"
+        "packet_loss.c"
+    INCLUDE_DIRS "." "../config"
+    REQUIRES
+        app_update
+        bt
+        driver
+        esp_event
+        esp_http_server
+        esp_netif
+        esp_timer
+        esp-tls
+        esp_wifi
+        json
+        mqtt
+        nvs_flash
+)

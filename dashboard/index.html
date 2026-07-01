@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>LowBLE MQTT Dashboard</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">LowBLE MQTT</p>
+          <h1>Dashboard de telemetria</h1>
+        </div>
+        <div class="connection-pill" id="connectionPill">
+          <span class="pulse"></span>
+          <span id="connectionText">Inicializando</span>
+        </div>
+      </header>
+
+      <main class="dashboard-grid">
+        <section class="hero-panel">
+          <div class="device-summary">
+            <div>
+              <p class="label">Dispositivo</p>
+              <strong id="deviceId">--</strong>
+            </div>
+            <div>
+              <p class="label">Pacote</p>
+              <strong id="counter">--</strong>
+            </div>
+            <div>
+              <p class="label">Recebido</p>
+              <strong id="lastSeen">--</strong>
+            </div>
+          </div>
+          <div class="signal-visual" aria-label="RSSI">
+            <div class="antenna">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div class="signal-copy">
+              <p class="label">Sinal RSSI</p>
+              <strong id="rssiHero">-- dBm</strong>
+              <div class="meter"><span id="rssiMeter"></span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="status-panel">
+          <div class="section-head">
+            <h2>Estado</h2>
+            <span id="topicName">lowble/#</span>
+          </div>
+          <div class="status-list">
+            <div><span>Sensor</span><strong id="sensorStatus">--</strong></div>
+            <div><span>DHT</span><strong id="dhtStatus">--</strong></div>
+            <div><span>Checksum</span><strong id="checksumStatus">--</strong></div>
+            <div><span>Energia</span><strong id="powerStatus">--</strong></div>
+          </div>
+        </section>
+
+        <section class="metric-card accent-temp">
+          <p>Temperatura</p>
+          <div class="metric-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M10 13.4V5.8a2.8 2.8 0 0 1 5.6 0v7.6a5 5 0 1 1-5.6 0Z"></path>
+              <path d="M12.8 8v8.2"></path>
+              <path d="M12.8 19a2.1 2.1 0 1 0 0-4.2 2.1 2.1 0 0 0 0 4.2Z"></path>
+            </svg>
+          </div>
+          <strong id="temperature">--</strong>
+          <span>graus Celsius</span>
+        </section>
+        <section class="metric-card accent-humidity">
+          <p>Umidade</p>
+          <div class="metric-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 3.5s6 6.2 6 10.3A6 6 0 0 1 6 13.8c0-4.1 6-10.3 6-10.3Z"></path>
+              <path d="M9.2 14.4a3 3 0 0 0 3.7 2.2"></path>
+            </svg>
+          </div>
+          <strong id="humidity">--</strong>
+          <span>percentual relativo</span>
+        </section>
+        <section class="metric-card accent-battery">
+          <p>Bateria</p>
+          <div class="metric-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M4 8h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2Z"></path>
+              <path d="M22 11v2"></path>
+              <path d="M6 12h7"></path>
+            </svg>
+          </div>
+          <strong id="battery">--</strong>
+          <span id="batteryHint">milivolts</span>
+        </section>
+        <section class="metric-card accent-loss">
+          <p>Perda de pacotes</p>
+          <div class="metric-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M4 7h16"></path>
+              <path d="M4 12h10"></path>
+              <path d="M4 17h7"></path>
+              <path d="m16 16 4 4"></path>
+              <path d="m20 16-4 4"></path>
+            </svg>
+          </div>
+          <strong id="packetLoss">--</strong>
+          <span id="packetDelta">delta --</span>
+        </section>
+
+        <section class="chart-panel wide">
+          <div class="section-head">
+            <h2>Ambiente</h2>
+            <span>temperatura e umidade</span>
+          </div>
+          <canvas id="environmentChart" width="900" height="280"></canvas>
+        </section>
+
+        <section class="chart-panel">
+          <div class="section-head">
+            <h2>Sinal</h2>
+            <span>RSSI</span>
+          </div>
+          <canvas id="rssiChart" width="520" height="260"></canvas>
+        </section>
+
+        <section class="chart-panel">
+          <div class="section-head">
+            <h2>Bateria</h2>
+            <span>mV</span>
+          </div>
+          <canvas id="batteryChart" width="520" height="260"></canvas>
+        </section>
+
+        <section class="table-panel wide">
+          <div class="section-head">
+            <h2>Mensagens recentes</h2>
+            <span id="messageCount">0 eventos</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Hora</th>
+                  <th>ID</th>
+                  <th>Temp.</th>
+                  <th>Umid.</th>
+                  <th>Bateria</th>
+                  <th>RSSI</th>
+                  <th>Flags</th>
+                </tr>
+              </thead>
+              <tbody id="messageRows"></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
