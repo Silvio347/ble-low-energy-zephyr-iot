@@ -1,0 +1,62 @@
+mainmenu "LowBLE nRF54L15 sensor"
+
+source "Kconfig.zephyr"
+
+menu "LowBLE sensor application"
+
+choice LOWB_POWER_PROFILE
+	prompt "Operation profile"
+	default LOWB_PROFILE_ECO
+
+config LOWB_PROFILE_DEMO
+	bool "Demo"
+	help
+	  Two-second transmit interval, verbose application behavior, and
+	  sensor power kept on after startup.
+
+config LOWB_PROFILE_BALANCED
+	bool "Balanced"
+	help
+	  Ten-second transmit interval with moderate behavior for functional
+	  testing.
+
+config LOWB_PROFILE_ECO
+	bool "Eco"
+	help
+	  Sixty-second transmit interval, short advertising window, and DHT11
+	  power cycled around each reading.
+
+endchoice
+
+config LOWB_DEVICE_ID
+	int "Sensor node device ID"
+	default 347
+	range 0 65535
+
+config LOWB_COMPANY_ID
+	hex "BLE manufacturer company ID"
+	default 0xffff
+	range 0x0000 0xffff
+	help
+	  Prototype-only company ID used in BLE manufacturer data. Replace this
+	  before product use with an assigned Bluetooth SIG company identifier.
+
+config LOWB_BATTERY_INITIAL_MV
+	int "Initial simulated battery voltage in mV"
+	default 3000
+	range 0 65535
+
+config LOWB_BATTERY_MIN_MV
+	int "Minimum simulated battery voltage in mV"
+	default 2400
+	range 0 65535
+
+config LOWB_BATTERY_DROP_EVERY_N_PACKETS
+	int "Simulated battery drop cadence"
+	default 16
+	range 1 65535
+	help
+	  The simulated battery decreases by 1 mV every N packets until the
+	  minimum voltage is reached.
+
+endmenu

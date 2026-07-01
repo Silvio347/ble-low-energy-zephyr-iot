@@ -1,0 +1,7 @@
+/ {
+	dht11_sensor: dht11-sensor {
+		compatible = "lowble,dht11-gpio";
+		power-gpios = <&gpio1 10 GPIO_ACTIVE_HIGH>;
+		data-gpios = <&gpio1 11 (GPIO_PULL_UP | GPIO_ACTIVE_HIGH)>;
+	};
+};

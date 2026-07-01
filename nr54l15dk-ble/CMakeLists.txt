@@ -1,0 +1,15 @@
+cmake_minimum_required(VERSION 3.20.0)
+find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
+
+project(lowble)
+set(PROJECT_VER "0.1.0")
+target_sources(app PRIVATE
+  src/main.c
+  src/dht11.c
+  src/payload_codec.c
+  src/ble_adv.c
+  src/power_profile.c
+  src/battery_sim.c
+)
+
+zephyr_include_directories(include)

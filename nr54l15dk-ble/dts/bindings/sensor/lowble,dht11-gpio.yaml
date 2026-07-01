@@ -1,0 +1,12 @@
+description: GPIO based DHT11 sensor
+
+compatible: "lowble,dht11-gpio"
+
+properties:
+  power-gpios:
+    type: phandle-array
+    required: true
+
+  data-gpios:
+    type: phandle-array
+    required: true
