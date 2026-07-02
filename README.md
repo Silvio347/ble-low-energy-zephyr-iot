@@ -249,7 +249,7 @@ The project still compiles if this private file does not exist. In that case, bl
 Example MQTT defaults:
 
 ```c
-#define DEFAULT_MQTT_HOST "03e613ef35b443dfb6cb61216465f006.s1.eu.hivemq.cloud"
+#define DEFAULT_MQTT_HOST "03e613ef35[...].s1.eu.hivemq.cloud"
 #define DEFAULT_MQTT_PORT 8883
 #define DEFAULT_MQTT_USERNAME "hivemq-user"
 #define DEFAULT_MQTT_PASSWORD "hivemq-password"
